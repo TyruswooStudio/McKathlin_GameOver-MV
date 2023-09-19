@@ -163,7 +163,7 @@
  */
 
 var Imported = Imported || {};
-Imported.Kath_GameOver = true;
+Imported.McKathlin_GameOver = true;
 
 //=============================================================================
 // Helper method: parseBoolean
