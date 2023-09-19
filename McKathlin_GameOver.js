@@ -1,12 +1,35 @@
 //=============================================================================
 // Custom Game Over, version 1.3
 // by McKathlin
-// Kath_GameOver.js
-// Last Update: 2016.08.18
+// McKathlin_GameOver.js
 //=============================================================================
 
+/*
+ * MIT License
+ *
+ * Copyright (c) 2023 Kathy Bunn and Scott Tyrus Washburn
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+ 
 /*:
- * @plugindesc Change what happens when the party dies or Game Over is called.
+ * @plugindesc MV v1.3.1 Change what happens when the party dies or Game Over is called.
  * 
  * @param Party Death Common Event ID
  * @desc The ID of the common event to run as soon as the party dies.
@@ -114,6 +137,29 @@
  * * The PDCE runs in the same scene where party death occurred.
  *   The AGOCE runs in a newly started map scene, with the screen faded to
  *   black, and the party leader revived to 1 HP.
+ * 
+ * ============================================================================
+ * MIT License
+ *
+ * Copyright (c) 2023 Kathy Bunn and Scott Tyrus Washburn
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the “Software”), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
  */
 
 var Imported = Imported || {};
@@ -122,11 +168,11 @@ Imported.Kath_GameOver = true;
 //=============================================================================
 // Helper method: parseBoolean
 //=============================================================================
-var Kath = Kath || {};
-Kath.Core = Kath.Core || {};
+var McKathlin = McKathlin || {};
+McKathlin.Core = McKathlin.Core || {};
 
 // Convert a user-entered string into a Boolean true or false value.
-Kath.Core.parseBoolean = function(parameter, defaultValue) {
+McKathlin.Core.parseBoolean = function(parameter, defaultValue) {
     switch (String(parameter).trim().toLowerCase()) {
         case 'true':
         case 't':
@@ -151,20 +197,20 @@ Kath.Core.parseBoolean = function(parameter, defaultValue) {
 // Parameters and Constants
 //=============================================================================
 
-Kath.Parameters = PluginManager.parameters('Kath_GameOver');
-Kath.Param = Kath.Param || {};
+McKathlin.Parameters = PluginManager.parameters('Kath_GameOver');
+McKathlin.Param = McKathlin.Param || {};
 
-Kath.Param.PartyDeathCommonEventID =
-    Number.parseInt(Kath.Parameters['Party Death Common Event ID']);
-Kath.Param.ShowGameOverScene =
-    Kath.Core.parseBoolean(Kath.Parameters['Show Game Over Scene'], true);
-Kath.Param.ReloadLastSave =
-    Kath.Core.parseBoolean(Kath.Parameters['Reload Last Save'], false);
-Kath.Param.AfterGameOverCommonEventID =
-    Number.parseInt(Kath.Parameters['After Game Over Common Event ID']);
+McKathlin.Param.PartyDeathCommonEventID =
+    Number.parseInt(McKathlin.Parameters['Party Death Common Event ID']);
+McKathlin.Param.ShowGameOverScene =
+    McKathlin.Core.parseBoolean(McKathlin.Parameters['Show Game Over Scene'], true);
+McKathlin.Param.ReloadLastSave =
+    McKathlin.Core.parseBoolean(McKathlin.Parameters['Reload Last Save'], false);
+McKathlin.Param.AfterGameOverCommonEventID =
+    Number.parseInt(McKathlin.Parameters['After Game Over Common Event ID']);
 
-Kath.GameOver = {};
-Kath.GameOver.RELOAD_FADE_DELAY = 60;
+McKathlin.GameOver = {};
+McKathlin.GameOver.RELOAD_FADE_DELAY = 60;
 
 //=============================================================================
 // Party death common event
@@ -180,9 +226,9 @@ BattleManager.processDefeat = function() {
         this.endBattle(2);
     } else {
         AudioManager.stopBgm();
-        if (Kath.Param.PartyDeathCommonEventID) {
+        if (McKathlin.Param.PartyDeathCommonEventID) {
             $gameParty.reviveLeader();
-            $gameTemp.reserveCommonEvent(Kath.Param.PartyDeathCommonEventID);
+            $gameTemp.reserveCommonEvent(McKathlin.Param.PartyDeathCommonEventID);
             $gameTroop.setupBattleEvent(); // Run the reserved common event.
             // the battle doesn't end here in this case,
             // unless a scene control command ends it in the common event.
@@ -195,9 +241,9 @@ BattleManager.processDefeat = function() {
 // replacement method
 Scene_Base.prototype.checkGameover = function() {
     if ($gameParty.isAllDead()) {
-        if (Kath.Param.PartyDeathCommonEventID) {
+        if (McKathlin.Param.PartyDeathCommonEventID) {
             $gameParty.reviveLeader();
-            $gameTemp.reserveCommonEvent(Kath.Param.PartyDeathCommonEventID);
+            $gameTemp.reserveCommonEvent(McKathlin.Param.PartyDeathCommonEventID);
         } else {
             SceneManager.goto(Scene_Gameover);
         }
@@ -217,7 +263,7 @@ Game_Party.prototype.reviveLeader = function() {
 // so that it skips straight to the next scene.
 //=============================================================================
 
-if (!Kath.Param.ShowGameOverScene) {
+if (!McKathlin.Param.ShowGameOverScene) {
     Scene_Gameover.prototype.create = function() {
         Scene_Base.prototype.create.call(this);
         //this.playGameoverMusic(); // No music.
@@ -246,14 +292,14 @@ if (!Kath.Param.ShowGameOverScene) {
 }
 
 // new method
-Kath.GameOver.findPostGameOverSceneClass = function() {
-    if (Kath.Param.ReloadLastSave) {
+McKathlin.GameOver.findPostGameOverSceneClass = function() {
+    if (McKathlin.Param.ReloadLastSave) {
         if (DataManager.isThisGameFile(DataManager.lastAccessedSavefileId())) {
             return Scene_Map;
         } else {
             return Scene_Title;
         }
-    } else if (Kath.Param.AfterGameOverCommonEventID) {
+    } else if (McKathlin.Param.AfterGameOverCommonEventID) {
         return Scene_Map;
     } else {
         return Scene_Title;
@@ -264,20 +310,20 @@ Kath.GameOver.findPostGameOverSceneClass = function() {
 // After-Game-Over behavior. This includes reload last save, if called for.
 //=============================================================================
 
-if (Kath.Param.ReloadLastSave) {
+if (McKathlin.Param.ReloadLastSave) {
     // extended method
-    Kath.GameOver.Scene_Gameover_gotoTitle = Scene_Gameover.prototype.gotoTitle;
+    McKathlin.GameOver.Scene_Gameover_gotoTitle = Scene_Gameover.prototype.gotoTitle;
     Scene_Gameover.prototype.gotoTitle = function() {
         var saveId = DataManager.lastAccessedSavefileId();
         if (!DataManager.isThisGameFile(saveId)) {
             // This game hasn't been saved yet. Go to the title screen.
-            return Kath.GameOver.Scene_Gameover_gotoTitle.call(this);
+            return McKathlin.GameOver.Scene_Gameover_gotoTitle.call(this);
         }
         DataManager.loadGame(saveId);
         $gamePlayer.requestMapReload();
         $gameScreen.startFadeOut(1); // start next scene blacked out
-        if (Kath.Param.AfterGameOverCommonEventID > 0) {
-            $gameTemp.reserveCommonEvent(Kath.Param.AfterGameOverCommonEventID);
+        if (McKathlin.Param.AfterGameOverCommonEventID > 0) {
+            $gameTemp.reserveCommonEvent(McKathlin.Param.AfterGameOverCommonEventID);
             SceneManager.goto(Scene_Map);
         } else {
             SceneManager.goto(Scene_Map);
@@ -287,12 +333,12 @@ if (Kath.Param.ReloadLastSave) {
             $gameScreen.startFadeIn(this.slowFadeSpeed());
         }
     };
-} else if (Kath.Param.AfterGameOverCommonEventID > 0) {
+} else if (McKathlin.Param.AfterGameOverCommonEventID > 0) {
     // replacement method
     Scene_Gameover.prototype.gotoTitle = function() {
         $gameScreen.startFadeOut(1); // start next scene blacked out
         $gameParty.reviveLeader();
-        $gameTemp.reserveCommonEvent(Kath.Param.AfterGameOverCommonEventID);
+        $gameTemp.reserveCommonEvent(McKathlin.Param.AfterGameOverCommonEventID);
         SceneManager.goto(Scene_Map);
     };
 }
