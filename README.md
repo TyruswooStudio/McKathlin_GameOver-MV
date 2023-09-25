@@ -1,4 +1,4 @@
-# McKathlin Game Over Plugin for RPG Maker MZ
+# McKathlin Game Over Plugin for RPG Maker MV
 
 ## Compatibility
 
