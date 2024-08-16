@@ -139,6 +139,8 @@
  *   black, and the party leader revived to 1 HP.
  * 
  * ============================================================================
+ * Visit Tyruswoo.com to ask for help, donate, or browse more of our plugins.
+ * ============================================================================
  * MIT License
  *
  * Copyright (c) 2023 Kathy Bunn and Scott Tyrus Washburn
