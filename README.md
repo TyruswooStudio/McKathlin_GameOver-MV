@@ -111,7 +111,7 @@ Event (PDCE) in the following ways:
 3. As always, remember to use a Fadein Screen command!
   (The fade that accompanies the Player Transfer command won't be sufficient.)
 
-### For more help using the Game Over plugin, visit [Tyruswoo.com](https://www.tyruswoo.com/).
+### Visit [**Tyruswoo.com**](https://www.tyruswoo.com) to [ask for help](https://www.tyruswoo.com/contact-us/), [donate](https://www.tyruswoo.com/donate/), or browse more of our [plugins](https://www.tyruswoo.com/downloads/rpg-maker-plugin-downloads/).
 
 ## Version History
 
